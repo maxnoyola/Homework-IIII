@@ -25,7 +25,6 @@ void createRandomSizedMap() {
 }
 
 int main() {
-    string name;
     int x, y;
 
     // a random size map will be created 
