@@ -1,0 +1,45 @@
+#include <iostream>
+#include <cstdlib> // cstdlib is a collection of functions and macros 
+#include <ctime> //ctime is a funtion that will return pointer in C that represents date and time 
+
+using namespace std;
+
+// these will be the global variables for the map dimensions
+int mapWidth = 30;
+int mapHeight = 30;
+
+// here using a bool, will be where the function will go to check if the location is valid 
+bool isLocationValid(int x, int y) {
+    return (x >= -mapWidth / 2 && x <= mapWidth / 2) && (y >= -mapHeight / 2 && y <= mapHeight / 2);
+}
+
+// here the function will create a random sized map
+void createRandomSizedMap() {
+    srand(static_cast<unsigned>(time(0))); // as shown in class here is a seed 
+    mapWidth = rand() % 21; // random width between 0 and 20
+    mapHeight = rand() % 21; // random height between 0 and 20
+
+    // this will ensure the map is at least a size of 1 
+    if (mapWidth == 0) mapWidth = 1;
+    if (mapHeight == 0) mapHeight = 1;
+}
+
+int main() {
+    string name;
+    int x, y;
+
+    // a random size map will be created 
+    createRandomSizedMap();
+
+    cout << "Enter your location point (x, y): ";
+    cin >> x >> y;
+
+    // this is where the location will be dertemined valid or not
+    if (isLocationValid(x, y)) {
+        cout << ", your location (" << x << ", " << y << ") is within the map!" << endl;
+    } else {
+        cout << ", your location (" << x << ", " << y << ") is outside the map!" << endl;
+    }
+
+    return 0;
+}

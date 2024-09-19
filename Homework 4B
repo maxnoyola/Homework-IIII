@@ -1,0 +1,84 @@
+#include <iostream>
+
+using namespace std;
+
+// below is the function to determine whether it will be a leap yr or not
+bool isLeapYear(int year) {
+    if (year % 4 == 0) {      // if statements
+        if (year % 100 == 0) {
+            if (year % 400 == 0)
+                return true;
+            else               // else staements
+                return false;
+        }
+        else
+            return true;
+    }
+    else
+        return false;
+}
+
+// below is the function to find the day of the week to find the first week of Jan.
+int dayOfWeek(int year) {
+    int d = 1, m = 1, y = year;
+
+    // I did not come up with this, I found online this algorithm that will help me find the day of the week
+    if (m == 1 || m == 2) {
+        m += 12;
+        y -= 1;
+    }
+
+    int k = y % 100;
+    int j = y / 100;
+
+    int day = (d + ((13 * (m + 1)) / 5) + k + (k / 4) + (j / 4) - (2 * j)) % 7;
+    return (day + 5) % 7; 
+}
+
+// this function will give the given year
+void printCalendar(int year) {
+    int daysInMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    string months[] = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+    
+    if (isLeapYear(year)) {
+        daysInMonth[1] = 29; // this will help tell that Feb. has 29 days in a leap year
+    }
+
+    int day = dayOfWeek(year); // this will be the starting day of the week
+
+    // this will help the pogram loop through each month 
+    for (int i = 0; i < 12; i++) {
+        cout << "\n ------------- " << months[i] << " -------------\n";
+        cout << " Sun Mon Tue Wed Thu Fri Sat\n";
+
+        // this will print out the spaces for the days on the calender
+        for (int j = 0; j < day; j++) {
+            cout << "    ";
+        }
+
+        // this will print out the days of the months 
+        for (int j = 1; j <= daysInMonth[i]; j++) {
+            cout << " " << (j < 10 ? " " : "") << j << " ";
+            day++;
+
+            // so as it'e since the dawn of time, after the 7th day there will be a new line for the other days in the months 
+            if (day == 7) {
+                cout << endl;
+                day = 0;
+            }
+        }
+
+        cout << endl;
+    }
+}
+
+int main() {
+    int year;
+    cout << "Enter a year: ";
+    cin >> year;
+
+    printCalendar(year);
+
+    return 0;
+}
+// this was brutal (for me at least) and I had some help with this plus lots of google foo.  
